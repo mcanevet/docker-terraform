@@ -12,6 +12,6 @@ RUN find / -name libnss_wrapper.so
 
 FROM hashicorp/terraform:0.13.5
 
-RUN apk add jq
+RUN apk add jq gnupg
 
 COPY --from=build-nss-wrapper /nss_wrapper/obj/src/libnss_wrapper.so /usr/local/lib/libnss_wrapper.so
