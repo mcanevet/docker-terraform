@@ -14,4 +14,8 @@ FROM hashicorp/terraform:0.13.5
 
 RUN apk add jq gnupg
 
+RUN mkdir -p ~/.terraform.d/plugins \
+	&& wget -q https://github.com/radekg/terraform-provisioner-ansible/releases/download/v2.5.0/terraform-provisioner-ansible-linux-amd64_v2.5.0 -O ~/.terraform.d/plugins/terraform-provisioner-ansible_v2.5.0 \
+	&& chmod +x ~/.terraform.d/plugins/terraform-provisioner-ansible_v2.5.0
+
 COPY --from=build-nss-wrapper /nss_wrapper/obj/src/libnss_wrapper.so /usr/local/lib/libnss_wrapper.so
