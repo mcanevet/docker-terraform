@@ -12,10 +12,27 @@ RUN find / -name libnss_wrapper.so
 
 FROM hashicorp/terraform:0.13.5
 
+ENV \
+	GOPASS_VERSION=1.8.3 \
+	SUMMON_VERSION=0.6.9 \
+	TERRAFORM_PROVISIONER_ANSIBLE_VERSION=2.5.0
+
 RUN apk add jq gnupg
 
+# Install gopass
+RUN wget https://github.com/gopasspw/gopass/releases/download/v${GOPASS_VERSION}/gopass-${GOPASS_VERSION}-linux-amd64.tar.gz -qO - | \
+	tar xz gopass-${GOPASS_VERSION}-linux-amd64/gopass -O > /usr/local/bin/gopass
+RUN chmod +x /usr/local/bin/gopass
+
+# Install summon
+RUN wget https://github.com/cyberark/summon/releases/download/v${SUMMON_VERSION}/summon-linux-amd64.tar.gz -qO - | \
+	tar xz summon -O > /usr/local/bin/summon
+RUN chmod +x /usr/local/bin/summon
+
+# Install Terraform Ansible provisioner
 RUN mkdir -p ~/.terraform.d/plugins \
-	&& wget -q https://github.com/radekg/terraform-provisioner-ansible/releases/download/v2.5.0/terraform-provisioner-ansible-linux-amd64_v2.5.0 -O ~/.terraform.d/plugins/terraform-provisioner-ansible_v2.5.0 \
-	&& chmod +x ~/.terraform.d/plugins/terraform-provisioner-ansible_v2.5.0
+	&& wget -q https://github.com/radekg/terraform-provisioner-ansible/releases/download/v${TERRAFORM_PROVISIONER_ANSIBLE_VERSION}/terraform-provisioner-ansible-linux-amd64_v${TERRAFORM_PROVISIONER_ANSIBLE_VERSION} -O ~/.terraform.d/plugins/terraform-provisioner-ansible_v${TERRAFORM_PROVISIONER_ANSIBLE_VERSION} \
+	&& chmod +x ~/.terraform.d/plugins/terraform-provisioner-ansible_v${TERRAFORM_PROVISIONER_ANSIBLE_VERSION}
 
 COPY --from=build-nss-wrapper /nss_wrapper/obj/src/libnss_wrapper.so /usr/local/lib/libnss_wrapper.so
+COPY summon-gopass /usr/local/bin/summon-gopass
