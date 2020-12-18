@@ -32,6 +32,8 @@ RUN chmod +x /usr/local/bin/summon
 
 # Install Terraform Ansible provisioner
 RUN mkdir -p x /tmp/.terraform.d/plugins \
+	&& chgrp 0 -R /tmp/.terraform.d \
+	&& chmod g+w -R /tmp/.terraform.d \
 	&& wget -q https://github.com/radekg/terraform-provisioner-ansible/releases/download/v${TERRAFORM_PROVISIONER_ANSIBLE_VERSION}/terraform-provisioner-ansible-linux-amd64_v${TERRAFORM_PROVISIONER_ANSIBLE_VERSION} -O /tmp/.terraform.d/plugins/terraform-provisioner-ansible_v${TERRAFORM_PROVISIONER_ANSIBLE_VERSION} \
 	&& chmod +x /tmp/.terraform.d/plugins/terraform-provisioner-ansible_v${TERRAFORM_PROVISIONER_ANSIBLE_VERSION}
 
