@@ -14,6 +14,7 @@ FROM hashicorp/terraform:0.13.5
 
 ENV \
 	GOPASS_VERSION=1.8.3 \
+	SUMMON_PROVIDER=/usr/local/bin/summon-gopass \
 	SUMMON_VERSION=0.8.3 \
 	TERRAFORM_PROVISIONER_ANSIBLE_VERSION=2.5.0
 
