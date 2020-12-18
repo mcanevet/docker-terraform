@@ -17,7 +17,7 @@ ENV \
 	SUMMON_VERSION=0.6.9 \
 	TERRAFORM_PROVISIONER_ANSIBLE_VERSION=2.5.0
 
-RUN apk add jq gnupg
+RUN apk add jq gnupg bash
 
 # Install gopass
 RUN wget https://github.com/gopasspw/gopass/releases/download/v${GOPASS_VERSION}/gopass-${GOPASS_VERSION}-linux-amd64.tar.gz -qO - | \
