@@ -30,12 +30,12 @@ RUN wget https://github.com/cyberark/summon/releases/download/v${SUMMON_VERSION}
 	tar xz summon -O > /usr/local/bin/summon
 RUN chmod +x /usr/local/bin/summon
 
-# Install Terraform Ansible provisioner
-RUN mkdir -p x /tmp/.terraform.d/plugins \
-	&& chgrp 0 -R /tmp/.terraform.d \
-	&& chmod g+w -R /tmp/.terraform.d \
-	&& wget -q https://github.com/radekg/terraform-provisioner-ansible/releases/download/v${TERRAFORM_PROVISIONER_ANSIBLE_VERSION}/terraform-provisioner-ansible-linux-amd64_v${TERRAFORM_PROVISIONER_ANSIBLE_VERSION} -O /tmp/.terraform.d/plugins/terraform-provisioner-ansible_v${TERRAFORM_PROVISIONER_ANSIBLE_VERSION} \
-	&& chmod +x /tmp/.terraform.d/plugins/terraform-provisioner-ansible_v${TERRAFORM_PROVISIONER_ANSIBLE_VERSION}
+# # Install Terraform Ansible provisioner
+# RUN mkdir -p x /tmp/.terraform.d/plugins \
+# 	&& chgrp 0 -R /tmp/.terraform.d \
+# 	&& chmod g+w -R /tmp/.terraform.d \
+# 	&& wget -q https://github.com/radekg/terraform-provisioner-ansible/releases/download/v${TERRAFORM_PROVISIONER_ANSIBLE_VERSION}/terraform-provisioner-ansible-linux-amd64_v${TERRAFORM_PROVISIONER_ANSIBLE_VERSION} -O /tmp/.terraform.d/plugins/terraform-provisioner-ansible_v${TERRAFORM_PROVISIONER_ANSIBLE_VERSION} \
+# 	&& chmod +x /tmp/.terraform.d/plugins/terraform-provisioner-ansible_v${TERRAFORM_PROVISIONER_ANSIBLE_VERSION}
 
 COPY --from=build-nss-wrapper /nss_wrapper/obj/src/libnss_wrapper.so /usr/local/lib/libnss_wrapper.so
 COPY summon-gopass /usr/local/bin/summon-gopass
