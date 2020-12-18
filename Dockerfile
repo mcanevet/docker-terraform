@@ -31,9 +31,8 @@ RUN wget https://github.com/cyberark/summon/releases/download/v${SUMMON_VERSION}
 RUN chmod +x /usr/local/bin/summon
 
 # Install Terraform Ansible provisioner
-RUN mkdir -p ~/.terraform.d/plugins \
-	&& wget -q https://github.com/radekg/terraform-provisioner-ansible/releases/download/v${TERRAFORM_PROVISIONER_ANSIBLE_VERSION}/terraform-provisioner-ansible-linux-amd64_v${TERRAFORM_PROVISIONER_ANSIBLE_VERSION} -O ~/.terraform.d/plugins/terraform-provisioner-ansible_v${TERRAFORM_PROVISIONER_ANSIBLE_VERSION} \
-	&& chmod +x ~/.terraform.d/plugins/terraform-provisioner-ansible_v${TERRAFORM_PROVISIONER_ANSIBLE_VERSION}
+RUN wget -q https://github.com/radekg/terraform-provisioner-ansible/releases/download/v${TERRAFORM_PROVISIONER_ANSIBLE_VERSION}/terraform-provisioner-ansible-linux-amd64_v${TERRAFORM_PROVISIONER_ANSIBLE_VERSION} -O /usr/local/share/terraform/plugins/terraform-provisioner-ansible_v${TERRAFORM_PROVISIONER_ANSIBLE_VERSION} \
+	&& chmod +x /usr/local/share/terraform/plugins/terraform-provisioner-ansible_v${TERRAFORM_PROVISIONER_ANSIBLE_VERSION}
 
 COPY --from=build-nss-wrapper /nss_wrapper/obj/src/libnss_wrapper.so /usr/local/lib/libnss_wrapper.so
 COPY summon-gopass /usr/local/bin/summon-gopass
